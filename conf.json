@@ -1,7 +1,8 @@
 {
-    "token": "oauth:68p8errojrrkmsg1yqh6u4m4rb240g",
-    "nickname": "chatread",
-    "channel": "maxricicek",
+    "token": "",
+    "nickname": "",
+    "channel": "",
     "debug": 0,
-    "output": 1
+    "output": 1,
+    "refresh-rate": 1000
 }
