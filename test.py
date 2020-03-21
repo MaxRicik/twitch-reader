@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import messagebox
 import os
 import socket
 import json
@@ -54,11 +55,15 @@ def frontend():
 
         def delt(self):
 
-            os.system(f"del {self.commands_om_var.get()}.txt")
-            
-            with open(f"{self.commands_om_var.get()}.txt", "w") as soubor:
+            choice = messagebox.askyesno("Twitch reader", f"Do you really want to delete {self.commands_om_var.get()}.txt?")
 
-                self.okenko.delete(1.0, tk.END)
+            if choice == True:
+
+                os.system(f"del {self.commands_om_var.get()}.txt")
+                
+                with open(f"{self.commands_om_var.get()}.txt", "w") as soubor:
+
+                    self.okenko.delete(1.0, tk.END)
 
     app = App()
 
