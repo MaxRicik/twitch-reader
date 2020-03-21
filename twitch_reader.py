@@ -17,6 +17,10 @@ def frontend():
                 self.conf = json.load(soubor)
 
             self.root = tk.Tk()
+            self.root.bind("<Delete>", self.delt)
+            self.root.bind("<Up>", self.up)
+            self.root.bind("<Down>", self.down)
+            self.root.bind("<r>", self.refresh)
 
             self.commands_om_var = tk.StringVar()
             self.commands_om_var.set(self.conf["commands"][0])
@@ -26,7 +30,7 @@ def frontend():
             self.okenko = scrolledtext.ScrolledText(self.root)
             self.okenko.grid(row=1, column=0, columnspan=2, sticky="wen")
 
-            self.btn = tk.Button(self.root, text="Refresh", command=lambda: self.refresh())
+            self.btn = tk.Button(self.root, text="Refresh", command=self.refresh)
             self.btn.grid(row=2, column=0)
 
             self.rem = tk.Button(self.root, text="Clear", command=self.delt)
@@ -51,9 +55,19 @@ def frontend():
 
                     pass
 
+            poc = 0
+
+            for i in self.conf["commands"]:
+
+                if i == self.commands_om_var.get():
+
+                    self.commands_om_var_now = poc
+
+                poc += 1
+
             self.root.after(self.conf["refresh-rate"], self.refresh)
 
-        def delt(self):
+        def delt(self, event):
 
             choice = messagebox.askyesno("Twitch reader", f"Do you really want to delete {self.commands_om_var.get()}.txt?")
 
@@ -64,6 +78,26 @@ def frontend():
                 with open(f"{self.commands_om_var.get()}.txt", "w") as soubor:
 
                     self.okenko.delete(1.0, tk.END)
+
+        def up(self, event):
+
+            if self.commands_om_var_now > 0:
+
+                self.commands_om_var.set(self.conf["commands"][self.commands_om_var_now - 1])
+
+                self.refresh()
+            
+            print(self.commands_om_var_now)
+
+        def down(self, event):
+
+            if self.commands_om_var_now + 1 < len(self.conf["commands"]):
+
+                self.commands_om_var.set(self.conf["commands"][self.commands_om_var_now + 1])
+
+                self.refresh()
+
+            print(self.commands_om_var_now)
 
     app = App()
 
