@@ -199,8 +199,6 @@ def backend():
                 if message_split[i].startswith("@") == True:
 
                     message_split[i] = message_split[i].lower()
-                
-                print(i)
 
             message = str()
 
