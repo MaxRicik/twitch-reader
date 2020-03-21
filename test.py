@@ -31,10 +31,17 @@ def frontend():
             self.rem = tk.Button(self.root, text="Clear", command=self.delt)
             self.rem.grid(row=2, column=1)
 
+            self.refresh()
+
+            self.root.mainloop()
+
+        def refresh(self, var=str()):
+
             try:
 
                 with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
 
+                    self.okenko.delete(1.0, tk.END)
                     self.okenko.insert(tk.END, soubor.read())
 
             except FileNotFoundError:
@@ -42,17 +49,6 @@ def frontend():
                 with open(f"{self.commands_om_var.get()}.txt", "w"):
 
                     pass
-
-            self.refresh()
-
-            self.root.mainloop()
-
-        def refresh(self, var=str()):
-
-            with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
-
-                self.okenko.delete(1.0, tk.END)
-                self.okenko.insert(tk.END, soubor.read())
 
             self.root.after(self.conf["refresh-rate"], self.refresh)
 
