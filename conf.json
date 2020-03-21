@@ -2,7 +2,9 @@
     "token": "",
     "nickname": "",
     "channel": "",
-    "debug": 0,
+    "raw_output": 0,
     "output": 1,
-    "refresh-rate": 1000
+    "refresh-rate": 1000,
+    "commands": [],
+    "gui": 1
 }

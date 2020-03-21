@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import scrolledtext
-import time
 import os
 import socket
 import json
@@ -8,55 +7,56 @@ from threading import Thread
 
 def frontend():
 
-    root = tk.Tk()
+    class App:
 
-    def refresh():
+        def __init__(self):
 
-        with open("dotazy.txt", "r", encoding="utf-8") as soubor:
+            with open("conf.json", "r") as soubor:
 
-            okenko.delete(1.0, tk.END)
-            okenko.insert(tk.END, soubor.read())
-        
-        root.after(conf["refresh-rate"], refresh)
+                self.conf = json.load(soubor)
 
-    def delt():
+            self.root = tk.Tk()
 
-        os.system("del dotazy.txt")
-        
-        with open("dotazy.txt", "w"):
+            self.commands_om_var = tk.StringVar()
+            self.commands_om_var.set(self.conf["commands"][0])
+            self.commands_om = tk.OptionMenu(self.root, self.commands_om_var, *self.conf["commands"], command=self.refresh)
+            self.commands_om.grid(row=0, column=0)
 
-            pass
+            self.okenko = scrolledtext.ScrolledText(self.root)
+            self.okenko.grid(row=1, column=0, columnspan=2, sticky="wen")
 
-    def nast():
+            self.btn = tk.Button(self.root, text="Refresh", command=lambda: self.refresh())
+            self.btn.grid(row=2, column=0)
 
-        pass
+            self.rem = tk.Button(self.root, text="Clear", command=self.delt)
+            self.rem.grid(row=2, column=1)
 
-    with open("conf.json", "r") as soubor:
+            with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
 
-        conf = json.load(soubor)
+                self.okenko.insert(tk.END, soubor.read())
 
-    okenko = scrolledtext.ScrolledText(root)
-    okenko.grid(row=0, column=0, columnspan=2)
+            self.refresh()
 
-    btn = tk.Button(root, text="Refresh", command=refresh)
-    btn.grid(row=1, column=0)
+            self.root.mainloop()
 
-    rem = tk.Button(root, text="Clear", command=delt)
-    rem.grid(row=1, column=1)
+        def refresh(self, var=str()):
 
-    """
-    menu = tk.Menu(root, tearoff=0)
-    menu.add_command(label="Nastavení", command=nast)
-    root.config(menu=menu)
-    """
+            with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
 
-    with open("dotazy.txt", "r", encoding="utf-8") as soubor:
+                self.okenko.delete(1.0, tk.END)
+                self.okenko.insert(tk.END, soubor.read())
 
-        okenko.insert(tk.END, soubor.read())
+            self.root.after(self.conf["refresh-rate"], self.refresh)
 
-    refresh()
+        def delt(self):
 
-    root.mainloop()
+            os.system(f"del {self.commands_om_var.get()}.txt")
+            
+            with open(f"{self.commands_om_var.get()}.txt", "w") as soubor:
+
+                self.okenko.delete(1.0, tk.END)
+
+    app = App()
 
 def backend():
 
@@ -82,7 +82,7 @@ def backend():
 
         raw_message = sock.recv(2048).decode('utf-8')
 
-        if conf["debug"] == 1:
+        if conf["raw_output"] == 1:
 
             print(raw_message)
 
@@ -106,7 +106,7 @@ def backend():
 
             correct_run = True
 
-        if correct_run == True and fe_stav == False:
+        if correct_run == True and fe_stav == False and conf["gui"] == 1:
 
             Thread(target=frontend).start()
 
@@ -123,6 +123,8 @@ def backend():
             s = 1
             k = int()
 
+            # získání nicknamu
+
             for i in range(len(raw_message)):
 
                 if raw_message[i] == "!":
@@ -132,6 +134,8 @@ def backend():
 
 
             nick = raw_message[1:k]
+
+            # získání zprávy
 
             for i in raw_message:
 
@@ -143,24 +147,22 @@ def backend():
 
                     poc += 1
 
+            # převedení na string
+
             for i in range(len(list_message) - 2):
 
                 message += list_message[i]
 
-            # vars: message, raw_message (raw output from Twitch API)
+            # vars: message, raw_message (raw output from Twitch API), nick
             # začátek kódu
+
+            for i in conf["commands"]:
             
-            if "#dotaz" in message.split():
+                if f"#{i}" in message.split():
 
-                with open("dotazy.txt", "a+", encoding="utf-8") as soubor:
+                    with open(f"{i}.txt", "a+", encoding="utf-8") as soubor:
 
-                    soubor.write(f"{nick}: {message}\n")
-
-            if "#review" in message.split():
-
-                with open("review.txt", "a+", encoding="utf-8") as soubor:
-
-                    soubor.write(f"{nick}: {message}")
+                        soubor.write(f"{nick}: {message}\n")
 
             # konec kódu
 
