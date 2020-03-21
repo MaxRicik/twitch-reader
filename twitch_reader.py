@@ -65,6 +65,8 @@ def frontend():
 
                 poc += 1
 
+            self.okenko.yview_moveto(1.0)
+
             self.root.after(self.conf["refresh-rate"], self.refresh)
 
         def delt(self, event):
