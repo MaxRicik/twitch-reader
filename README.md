@@ -5,7 +5,7 @@
 It have only one function now, and that's message sorting according to which hashtag is included in the message. ***Hashtags must be separated by space, otherwise the program will not catch that message.*** You are deciding, which hashtags will be catched by your list of hashtags in the settings.
 
 ## Setup
-Setup is pretty easy. You need to fill only a few data. For this purpose is GUI program `config.exe`.
+Setup is pretty easy. You need to fill only a few data. For this purpose is GUI program `config.exe`. If the program exit immediately, most likely you haven't entered your parameters correctly.
 
 ### Filling the data
 - main
