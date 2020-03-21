@@ -2,7 +2,7 @@
 **Twitch reader** is a program, which is reading Twitch chat in selected channel and then write it in the text file. It can run in CMD or GUI interface, but GUI interface has more functions.
 
 ## Functions
-It have only one function now, and that's message sorting according to which hashtag is included in the message. ***Hashtags must be separated by space, otherwise the program will not catch that message.*** You are deciding, which hashtags will be catched by your list of hashtags in the settings. Keyboard shortcuts are supported too.
+It have only one function now, and that's message sorting according to which keyword is included in the message. ("mentions" are converted to lowercase) ***Keywords must be separated by space, otherwise the program will not catch that message.*** You are deciding, which keyword will be catched by your list of hashtags in the settings. Keyboard shortcuts are supported too.
 Here is list of keys and their function:
 - Delete - message delete
 - Arrow up and down - switching between hashtags

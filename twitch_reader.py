@@ -162,7 +162,7 @@ def backend():
             s = 1
             k = int()
 
-            # získání nicknamu
+            # znickname get
 
             for i in range(len(raw_message)):
 
@@ -174,7 +174,7 @@ def backend():
 
             nick = raw_message[1:k]
 
-            # získání zprávy
+            # message convert to list form
 
             for i in raw_message:
 
@@ -185,23 +185,41 @@ def backend():
                 elif i == ":":
 
                     poc += 1
-
-            # převedení na string
+            
+            # converting mention to non-conflict format
 
             for i in range(len(list_message) - 2):
 
                 message += list_message[i]
+
+            message_split = message.split()
+
+            for i in range(len(message_split)):
+
+                if message_split[i].startswith("@") == True:
+
+                    message_split[i] = message_split[i].lower()
+                
+                print(i)
+
+            message = str()
+
+            # message convert to string form
+
+            for i in range(len(message_split)):
+
+                message += message_split[i] + " "
 
             # vars: message, raw_message (raw output from Twitch API), nick
             # začátek kódu
 
             for i in conf["commands"]:
             
-                if f"#{i}" in message.split():
+                    if f"{i}" in message.split():
 
-                    with open(f"{i}.txt", "a+", encoding="utf-8") as soubor:
+                        with open(f"{i}.txt", "a+", encoding="utf-8") as soubor:
 
-                        soubor.write(f"{nick}: {message}\n")
+                            soubor.write(f"{nick}: {message}\n")
 
             # konec kódu
 
