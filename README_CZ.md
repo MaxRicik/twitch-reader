@@ -6,7 +6,7 @@
 Zatím má jednu funkci, a to je třídění zpráv podle toho, jaký hashtag v nich byl obsažen. ***Hashtagy musí být vždy odděleny mezerou, jinak je program nezachytí.*** To, jaké hashtagy se následně budou zachytávat, určujete vy tím, které uvedete v nastavení.
 
 ## Nastavení
-Nastavení je docela jednoduché. Je potřeba vyplnit pár údajů. K tomuto účelu slouží GUI program `config.exe`.
+Nastavení je docela jednoduché. Je potřeba vyplnit pár údajů. K tomuto účelu slouží GUI program `config.exe`. Pokud se vám program hned vypne, pravděpodobně jste si nenastavili dobře parametry.
 
 ### Vyplnění
 - hlavní
