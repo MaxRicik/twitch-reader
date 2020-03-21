@@ -86,8 +86,6 @@ def frontend():
                 self.commands_om_var.set(self.conf["commands"][self.commands_om_var_now - 1])
 
                 self.refresh()
-            
-            print(self.commands_om_var_now)
 
         def down(self, event):
 
@@ -96,8 +94,6 @@ def frontend():
                 self.commands_om_var.set(self.conf["commands"][self.commands_om_var_now + 1])
 
                 self.refresh()
-
-            print(self.commands_om_var_now)
 
     app = App()
 
