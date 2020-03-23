@@ -1,4 +1,5 @@
 # Twitch reader [CZ](./README_CZ.md)
+
 **Twitch reader** is a program, which is reading Twitch chat in selected channel and then write it in the text file. It can run in CMD or GUI interface, but GUI interface has more functions.
 
 ## Functions
@@ -7,6 +8,8 @@ Here is list of keys and their function:
 - Delete - message delete
 - Arrow up and down - switching between hashtags
 - R - refresh of messages
+- A - auto refresh
+- S - scroll lock
 
 
 ## Setup

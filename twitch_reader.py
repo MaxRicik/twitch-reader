@@ -21,15 +21,30 @@ def frontend():
             self.root.bind("<Up>", self.up)
             self.root.bind("<Down>", self.down)
             self.root.bind("<r>", self.refresh)
+            self.root.bind("<s>", self.scroll_lock_f)
+            self.scroll_lock = tk.BooleanVar()
+            self.scroll_lock.set(True)
+            self.scroll_lock_o = tk.StringVar()
+            self.scroll_lock_o.set("Scroll lock: True")
+            self.root.bind("<a>", self.autorefresh_f)
+            self.autorefresh = tk.BooleanVar()
+            self.autorefresh.set(True)
+            self.autorefresh_o = tk.StringVar()
+            self.autorefresh_o.set("Auto refresh: True")
 
             self.commands_om_var = tk.StringVar()
             self.commands_om_var.set(self.conf["commands"][0])
             self.commands_om = tk.OptionMenu(self.root, self.commands_om_var, *self.conf["commands"], command=self.refresh)
             self.commands_om.grid(row=0, column=0)
 
-            self.okenko = scrolledtext.ScrolledText(self.root)
-            self.okenko.grid(row=1, column=0, columnspan=2, sticky="wen")
+            self.scroll_lock_l = tk.Label(self.root, textvariable=self.scroll_lock_o)
+            self.scroll_lock_l.grid(row=0, column=1)
 
+            self.autorefresh_l = tk.Label(self.root, textvariable=self.autorefresh_o)
+            self.autorefresh_l.grid(row=0, column=2)
+
+            self.okenko = scrolledtext.ScrolledText(self.root)
+            self.okenko.grid(row=1, column=0, columnspan=3, sticky="wen")
             self.btn = tk.Button(self.root, text="Refresh", command=self.refresh)
             self.btn.grid(row=2, column=0)
 
@@ -41,6 +56,12 @@ def frontend():
             self.root.mainloop()
 
         def refresh(self, var=str()):
+
+            self.okenko.config(state=tk.NORMAL)
+
+            if self.scroll_lock.get() == False:
+
+                self.position = self.okenko.yview()[0]
 
             try:
 
@@ -55,6 +76,16 @@ def frontend():
 
                     pass
 
+            if self.scroll_lock.get() == False:
+ 
+                self.okenko.yview_moveto(self.position)
+
+            else:
+
+                self.okenko.yview_moveto(1.0)
+
+            self.okenko.configure(state=tk.DISABLED)
+
             poc = 0
 
             for i in self.conf["commands"]:
@@ -64,8 +95,6 @@ def frontend():
                     self.commands_om_var_now = poc
 
                 poc += 1
-
-            self.okenko.yview_moveto(1.0)
 
             self.root.after(self.conf["refresh-rate"], self.refresh)
 
@@ -96,6 +125,34 @@ def frontend():
                 self.commands_om_var.set(self.conf["commands"][self.commands_om_var_now + 1])
 
                 self.refresh()
+
+        def scroll_lock_f(self, event):
+
+            if self.scroll_lock.get() == True:
+
+                self.scroll_lock.set(False)
+
+                self.scroll_lock_o.set("Scroll lock: True")
+            
+            else:
+
+                self.scroll_lock.set(True)
+
+                self.scroll_lock_o.set("Scroll lock: False")
+
+        def autorefresh_f(self, event):
+
+            if self.autorefresh.get() == True:
+
+                self.autorefresh.set(False)
+
+                self.autorefresh_o.set("Auto refresh: True")
+            
+            else:
+
+                self.autorefresh.set(True)
+                
+                self.autorefresh_o.set("Auto refresh: False")
 
     app = App()
 

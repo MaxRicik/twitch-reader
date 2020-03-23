@@ -130,6 +130,8 @@ class App:
 
         messagebox.showinfo("Config", "Command was added.")
 
+        self.commands_om_add.delete(0, tk.END)
+
     def remove(self):
 
         messagebox.showinfo("Config", f"Hashtag {self.commands_var.get()} has been removed.")

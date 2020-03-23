@@ -8,6 +8,8 @@ Zde je seznam kláves a co dělají:
 - Delete - vymazání zpráv
 - Šipka nahoru a dolů - přepínání mezi hashtagy
 - R - znovunačtení zpráv
+- A - automatické aktualizování
+- S - zámek posuvníku
 
 ## Nastavení
 Nastavení je docela jednoduché. Je potřeba vyplnit pár údajů. K tomuto účelu slouží GUI program `config.exe`. Pokud se vám program hned vypne, pravděpodobně jste si nenastavili dobře parametry.
