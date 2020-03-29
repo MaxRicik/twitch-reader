@@ -45,8 +45,15 @@ def frontend():
 
             self.okenko = scrolledtext.ScrolledText(self.root)
             self.okenko.grid(row=1, column=0, columnspan=3, sticky="wen")
-            self.btn = tk.Button(self.root, text="Refresh", command=self.refresh)
+            self.btn = tk.Button(self.root, text="Refresh", command=lambda: self.refresh(refresh=True))
             self.btn.grid(row=2, column=0)
+
+            for i in self.conf["colors"]:
+
+                self.okenko.tag_config(i[0], background=i[1], foreground=i[2])
+
+            self.color_now = str()
+            self.color_now_i = 0
 
             self.rem = tk.Button(self.root, text="Clear", command=self.delt)
             self.rem.grid(row=2, column=1)
@@ -55,50 +62,65 @@ def frontend():
 
             self.root.mainloop()
 
-        def refresh(self, var=str()):
+        def refresh(self, var=str(), refresh=False):
 
-            self.okenko.config(state=tk.NORMAL)
+            self.okenko.config(state=tk.DISABLED)
 
-            if self.scroll_lock.get() == False:
+            if self.autorefresh.get() == True or refresh == True:
 
-                self.position = self.okenko.yview()[0]
+                self.okenko.config(state=tk.NORMAL)
 
-            try:
+                if self.scroll_lock.get() == False:
 
-                with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
+                    self.position = self.okenko.yview()[0]
 
-                    self.okenko.delete(1.0, tk.END)
-                    self.okenko.insert(tk.END, soubor.read())
+                try:
 
-            except FileNotFoundError:
+                    with open(f"{self.commands_om_var.get()}.txt", "r", encoding="utf-8") as soubor:
 
-                with open(f"{self.commands_om_var.get()}.txt", "w"):
+                        self.okenko.delete(1.0, tk.END)
 
-                    pass
+                        text = soubor.read().splitlines()
 
-            if self.scroll_lock.get() == False:
- 
-                self.okenko.yview_moveto(self.position)
+                        self.color_now_i = 0
 
-            else:
+                        for i in range(len(text)):
+                            
+                            if self.conf["contrast"] == 1:
 
-                self.okenko.yview_moveto(1.0)
+                                self.change_color()
 
-            self.okenko.configure(state=tk.DISABLED)
+                            self.okenko.insert(tk.END, f"{text[i]}\n", self.color_now)
 
-            poc = 0
+                except FileNotFoundError:
 
-            for i in self.conf["commands"]:
+                    with open(f"{self.commands_om_var.get()}.txt", "w"):
 
-                if i == self.commands_om_var.get():
+                        pass
 
-                    self.commands_om_var_now = poc
+                if self.scroll_lock.get() == False:
+    
+                    self.okenko.yview_moveto(self.position)
 
-                poc += 1
+                else:
+
+                    self.okenko.yview_moveto(1.0)
+
+                self.okenko.configure(state=tk.DISABLED)
+
+                poc = 0
+
+                for i in self.conf["commands"]:
+
+                    if i == self.commands_om_var.get():
+
+                        self.commands_om_var_now = poc
+
+                    poc += 1
 
             self.root.after(self.conf["refresh-rate"], self.refresh)
 
-        def delt(self, event):
+        def delt(self, event=str()):
 
             choice = messagebox.askyesno("Twitch reader", f"Do you really want to delete {self.commands_om_var.get()}.txt?")
 
@@ -132,13 +154,13 @@ def frontend():
 
                 self.scroll_lock.set(False)
 
-                self.scroll_lock_o.set("Scroll lock: True")
+                self.scroll_lock_o.set("Scroll lock: False")
             
             else:
 
                 self.scroll_lock.set(True)
 
-                self.scroll_lock_o.set("Scroll lock: False")
+                self.scroll_lock_o.set("Scroll lock: True")
 
         def autorefresh_f(self, event):
 
@@ -146,13 +168,25 @@ def frontend():
 
                 self.autorefresh.set(False)
 
-                self.autorefresh_o.set("Auto refresh: True")
+                self.autorefresh_o.set("Auto refresh: False")
             
-            else:
+            elif self.autorefresh.get() == False:
 
                 self.autorefresh.set(True)
                 
-                self.autorefresh_o.set("Auto refresh: False")
+                self.autorefresh_o.set("Auto refresh: True")
+
+        def change_color(self):
+
+            try:
+
+                self.color_now_i += 1
+                self.color_now = self.conf["colors"][self.color_now_i][0]
+
+            except IndexError:
+
+                self.color_now_i = 0
+                self.color_now = self.conf["colors"][self.color_now_i][0]
 
     app = App()
 

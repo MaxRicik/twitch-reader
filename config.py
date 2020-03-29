@@ -68,6 +68,13 @@ class App:
         self.gui_ch = tk.Checkbutton(self.root, variable=self.gui_var, command=self.test)
         self.gui_ch.grid(row=7, column=1, sticky="w")
 
+        self.contrast_var = tk.IntVar()
+        self.contrast_var.set(self.conf["contrast"])
+        self.contrast_l = tk.Label(self.root, text="Contrast", anchor="w", width=10)
+        self.contrast_l.grid(row=8, column=0)
+        self.contrast_ch = tk.Checkbutton(self.root, variable=self.contrast_var, command=self.test)
+        self.contrast_ch.grid(row=8, column=1, sticky="w")
+
         self.commands_om_del_stav = False
         self.commands_om_add_stav = True
 
@@ -186,6 +193,7 @@ class App:
             self.commands_var_list.remove("-Add-")
 
             self.conf["gui"] = self.gui_var.get()
+            self.conf["contrast"] = self.contrast_var.get()
 
             with open("conf.json", "w+") as soubor:
 
