@@ -32,8 +32,15 @@ def frontend():
             self.autorefresh_o = tk.StringVar()
             self.autorefresh_o.set("Auto refresh: True")
 
+            self.hlavniMenu = tk.Menu(self.root)
+            self.hlavniMenu.add_command(label="Info", command=self.info)
+            self.root.configure(menu=self.hlavniMenu)
+
             self.commands_om_var = tk.StringVar()
-            self.commands_om_var.set(self.conf["commands"][0])
+            try:
+                self.commands_om_var.set(self.conf["commands"][0])
+            except:
+                pass
             self.commands_om = tk.OptionMenu(self.root, self.commands_om_var, *self.conf["commands"], command=self.refresh)
             self.commands_om.grid(row=0, column=0)
 
@@ -187,6 +194,17 @@ def frontend():
 
                 self.color_now_i = 0
                 self.color_now = self.conf["colors"][self.color_now_i][0]
+
+        def info(self):
+
+            root = tk.Toplevel(self.root)
+
+            version = tk.StringVar()
+            string = "Version: " + self.conf["version"]
+            version.set(string)
+
+            version = tk.Label(root, textvariable=version, font=("Calibri", 20))
+            version.pack()
 
     app = App()
 
