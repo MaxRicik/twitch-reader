@@ -6,6 +6,8 @@
     "output": 1,
     "refresh-rate": 1000,
     "commands": [],
+    "colors": [["white", "black", "white"], ["black", "white", "black"]],
+    "contrast": 1,
     "gui": 1,
     "version": "1.0"
 }
