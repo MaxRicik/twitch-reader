@@ -1,10 +1,10 @@
 # Twitch reader [CZ](./README_CZ.md)
 
-**Twitch reader** is a program, which is reading Twitch chat in selected channel and then write it in the text file. It can run in CMD or GUI interface, but GUI interface has more functions.
+**Twitch reader** is a program, which is reading Twitch chat in selected channel and then writing it in the text file. It can run in CMD or GUI interface, but GUI interface has more functions.
 
 ## Functions
-It have only one function now, and that's message sorting according to which keyword is included in the message. ("mentions" are converted to lowercase) ***Keywords must be separated by space, otherwise the program will not catch that message.*** You are deciding, which keyword will be catched by your list of hashtags in the settings. Keyboard shortcuts are supported too.
-Here is list of keys and their function:
+It has only one function now, and that's message sorting according to which keyword is included in the message. ("mentions" are converted to lowercase) ***Keywords must be separated by space, otherwise the program will not catch that message.*** You are choosing, which keyword will be catched by your list of hashtags in the settings. Keyboard shortcuts are supported too.
+Here is list of keys and their functions:
 - Delete - message delete
 - Arrow up and down - switching between hashtags
 - R - refresh of messages
@@ -13,7 +13,7 @@ Here is list of keys and their function:
 
 
 ## Setup
-Setup is pretty easy. You need to fill only a few data. For this purpose is GUI program `config.exe`. If the program exit immediately, most likely you haven't entered your parameters correctly.
+Setup is pretty easy. You need to fill only mandatory data. For this purpose is GUI program `config.exe`, or you can edit JSON file directly. If the program exits immediately, most likely you haven't entered parameters correctly.
 
 ### Filling the data
 - main
@@ -30,7 +30,7 @@ Setup is pretty easy. You need to fill only a few data. For this purpose is GUI 
     - gui (check for mod with GUI)
 
 	
-***You have to fill major data, without that the program will not work.***
+***You have to fill mandatory data, without that the program will not work.***
 
 ## Modifications
-There's notes in the code, which can help you. For your code is reserved a block, which is highlighted with comments. GUI doesn't have any exceptions and it has been written in Tkinter.
+There's comments in the code, which can help you. For your code is reserved a block, which is highlighted. GUI has been written in Tkinter.
