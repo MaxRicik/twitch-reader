@@ -30,7 +30,7 @@ Setup is pretty easy. You need to fill only a few data. For this purpose is GUI 
     - gui (check for mod with GUI)
 
 	
-***You have to fill minor data, without that the program will not work.***
+***You have to fill major data, without that the program will not work.***
 
 ## Modifications
 There's notes in the code, which can help you. For your code is reserved a block, which is highlighted with comments. GUI doesn't have any exceptions and it has been written in Tkinter.
