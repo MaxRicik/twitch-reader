@@ -32,4 +32,4 @@ Nastavení je docela jednoduché. Je potřeba vyplnit pár údajů. K tomuto ú�
 ***Hlavní parametry musí být vyplněny, bez nich nebude program fungovat.***
 
 ## Modifikace
-V kódu jsou obsaženy poznámky v angličtině, které vám mohou pomoct. Pro váš kód je vyhrazen blok, který je vyznačen komentáři. GUI nemá žádné zvláštní výjimky a je napsané v Tkinteru.
+V kódu jsou obsaženy poznámky v angličtině, které vám mohou pomoct. Pro váš kód je vyhrazen blok, který je vyznačen komentáři. GUI je napsané v Tkinteru.
